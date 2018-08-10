@@ -95,6 +95,7 @@ class UserAPI(MethodView):
 		# get the auth token
 		auth_header = request.headers.get('Authorization')
 		print(auth_header)
+		print("HUDIABBABABABABABBABABA")
 		if auth_header:
 			try:
 				auth_token = auth_header.split(" ")[1]
