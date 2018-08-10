@@ -26,13 +26,14 @@ class User(db.Model):
 		self.registered_on = datetime.datetime.now()
 		self.admin = admin
 
-	def encode_auth_token(self, user_id):
+	def encode_auth_token(self, user_id,user_email):
 		"""
 		Generates auth tpken
 		:return: string
 		"""
 		try:
 			payload = {
+				'iss' : user_email,
 				'exp' : datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=100),
 				'iat' : datetime.datetime.utcnow(),
 				'sub' : user_id

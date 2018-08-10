@@ -32,7 +32,7 @@ class RegisterAPI(MethodView):
 				db.session.add(user)
 				db.session.commit()
 				# generate the auth token
-				auth_token = user.encode_auth_token(user.id)
+				auth_token = user.encode_auth_token(user.id,user.email)
 				responseObject = {
 					'status': 'success',
 					'message': 'Successfully registered.',
@@ -65,7 +65,7 @@ class LoginAPI(MethodView):
 				email=post_data.get('email')
 			  ).first()
 			if user and bcrypt.check_password_hash(user.password,post_data.get('password')):
-				auth_token = user.encode_auth_token(user.id)
+				auth_token = user.encode_auth_token(user.id,user.email)
 				if auth_token:
 					responseObject = {
 						'status': 'success',
@@ -95,7 +95,6 @@ class UserAPI(MethodView):
 		# get the auth token
 		auth_header = request.headers.get('Authorization')
 		print(auth_header)
-		print("HUDIABBABABABABABBABABA")
 		if auth_header:
 			try:
 				auth_token = auth_header.split(" ")[1]
